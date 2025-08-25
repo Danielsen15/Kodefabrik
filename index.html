@@ -14,6 +14,7 @@
       height: 100vh;
       margin: 0;
       background-color: #f0f0f0;
+      overflow: hidden;
     }
     #display {
       width: 200px;
@@ -44,10 +45,25 @@
       font-size: 16px;
       color: #333;
     }
+    /* Fyrværkeri-styling */
+    .firework {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: explode 1s ease-out forwards;
+    }
+    @keyframes explode {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(0); opacity: 0; }
+    }
   </style>
 </head>
 <body>
   <h2>Indtast koden og afslut med #</h2>
+  <p style="color: #555; line-height: 1.5;">
+  </p>
   <input type="text" id="display" readonly>
   <div class="numpad">
     <button onclick="addToDisplay('1')">1</button>
@@ -67,7 +83,7 @@
 
   <script>
     let inputCode = '';
-    const correctCode = '7330'; // Ændr til din ønskede kode
+    const correctCode = '7330'; // Den korrekte kode
     const secretMessage = 'Tillykke! Du klarede det!';
     const errorMessage = 'Forkert kode, prøv igen!';
 
@@ -83,11 +99,26 @@
     function checkCode() {
       if (inputCode === correctCode) {
         document.getElementById('result').innerText = secretMessage;
+        launchFireworks(); // Udløser fyrværkeri
       } else {
         document.getElementById('result').innerText = errorMessage;
       }
       inputCode = ''; // Nulstil input
       document.getElementById('display').value = '';
+    }
+
+    function launchFireworks() {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const firework = document.createElement('div');
+          firework.className = 'firework';
+          firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          firework.style.left = `${Math.random() * window.innerWidth}px`;
+          firework.style.top = `${Math.random() * window.innerHeight}px`;
+          document.body.appendChild(firework);
+          setTimeout(() => firework.remove(), 1000); // Fjern efter animation
+        }, i * 100);
+      }
     }
   </script>
 </body>
