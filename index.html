@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escape Room Numpad</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    #display {
+      width: 200px;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 18px;
+      text-align: right;
+      border: 2px solid #333;
+      background-color: #fff;
+    }
+    .numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      gap: 10px;
+    }
+    button {
+      padding: 15px;
+      font-size: 18px;
+      border: 1px solid #333;
+      background-color: #ddd;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #bbb;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h2>Indtast koden og afslut med #</h2>
+  <input type="text" id="display" readonly>
+  <div class="numpad">
+    <button onclick="addToDisplay('1')">1</button>
+    <button onclick="addToDisplay('2')">2</button>
+    <button onclick="addToDisplay('3')">3</button>
+    <button onclick="addToDisplay('4')">4</button>
+    <button onclick="addToDisplay('5')">5</button>
+    <button onclick="addToDisplay('6')">6</button>
+    <button onclick="addToDisplay('7')">7</button>
+    <button onclick="addToDisplay('8')">8</button>
+    <button onclick="addToDisplay('9')">9</button>
+    <button onclick="addToDisplay('*')">*</button>
+    <button onclick="addToDisplay('0')">0</button>
+    <button onclick="addToDisplay('#')">#</button>
+  </div>
+  <p id="result"></p>
+
+  <script>
+    let inputCode = '';
+    const correctCode = '1234'; // Ændr til din ønskede kode
+    const secretMessage = 'Tillykke! Den hemmelige ledetråd er: Skattekisten er gemt bag billedet!';
+    const errorMessage = 'Forkert kode, prøv igen!';
+
+    function addToDisplay(char) {
+      if (char === '#') {
+        checkCode();
+      } else {
+        inputCode += char;
+        document.getElementById('display').value = inputCode;
+      }
+    }
+
+    function checkCode() {
+      if (inputCode === correctCode) {
+        document.getElementById('result').innerText = secretMessage;
+      } else {
+        document.getElementById('result').innerText = errorMessage;
+      }
+      inputCode = ''; // Nulstil input
+      document.getElementById('display').value = '';
+    }
+  </script>
+</body>
+</html>
