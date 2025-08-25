@@ -45,25 +45,31 @@
       font-size: 16px;
       color: #333;
     }
-    /* Fyrværkeri-styling */
+    /* Forbedret fyrværkeri-styling */
     .firework {
       position: absolute;
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      opacity: 0.8;
-      animation: explode 1s ease-out forwards;
+      opacity: 1;
+      animation: explode 1.5s ease-out forwards;
     }
     @keyframes explode {
-      0% { transform: scale(1); opacity: 0.8; }
-      100% { transform: scale(0); opacity: 0; }
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) scale(0.2);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
   <h2>Indtast koden og afslut med #</h2>
   <p style="color: #555; line-height: 1.5;">
-  </p>
+    </p>
   <input type="text" id="display" readonly>
   <div class="numpad">
     <button onclick="addToDisplay('1')">1</button>
@@ -83,8 +89,8 @@
 
   <script>
     let inputCode = '';
-    const correctCode = '7330'; // Den korrekte kode
-    const secretMessage = 'Tillykke! Du klarede det!';
+    const correctCode = '7330'; // Koden 
+    const secretMessage = 'Tillykke! Du klarede den!';
     const errorMessage = 'Forkert kode, prøv igen!';
 
     function addToDisplay(char) {
@@ -99,7 +105,7 @@
     function checkCode() {
       if (inputCode === correctCode) {
         document.getElementById('result').innerText = secretMessage;
-        launchFireworks(); // Udløser fyrværkeri
+        launchFireworks(); // Udløser forbedret fyrværkeri
       } else {
         document.getElementById('result').innerText = errorMessage;
       }
@@ -108,16 +114,24 @@
     }
 
     function launchFireworks() {
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 30; i++) { // Øget til 30 partikler
         setTimeout(() => {
           const firework = document.createElement('div');
           firework.className = 'firework';
-          firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-          firework.style.left = `${Math.random() * window.innerWidth}px`;
-          firework.style.top = `${Math.random() * window.innerHeight}px`;
+          firework.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 50%)`;
+          // Start fra midten af skærmen
+          const startX = window.innerWidth / 2;
+          const startY = window.innerHeight / 2;
+          firework.style.left = `${startX}px`;
+          firework.style.top = `${startY}px`;
+          // Tilfældig spredning i alle retninger
+          const angle = Math.random() * 2 * Math.PI;
+          const distance = Math.random() * 200 + 50; // Spredning mellem 50-250px
+          firework.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+          firework.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
           document.body.appendChild(firework);
-          setTimeout(() => firework.remove(), 1000); // Fjern efter animation
-        }, i * 100);
+          setTimeout(() => firework.remove(), 1500); // Fjern efter animation
+        }, i * 50); // Kortere forsinkelse for mere intens effekt
       }
     }
   </script>
