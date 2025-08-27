@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escape Room Numpad</title>
+  <title>Escape Room Menu</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,126 +14,34 @@
       height: 100vh;
       margin: 0;
       background-color: #f0f0f0;
-      overflow: hidden;
     }
-    #display {
-      width: 200px;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 18px;
-      text-align: right;
-      border: 2px solid #333;
-      background-color: #fff;
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
     }
-    .numpad {
-      display: grid;
-      grid-template-columns: repeat(3, 60px);
-      gap: 10px;
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
     button {
-      padding: 15px;
+      padding: 15px 30px;
       font-size: 18px;
       border: 1px solid #333;
       background-color: #ddd;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #bbb;
     }
-    #result {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #333;
-    }
-    /* Forbedret fyrværkeri-styling */
-    .firework {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      opacity: 1;
-      animation: explode 1.5s ease-out forwards;
-    }
-    @keyframes explode {
-      0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(var(--dx), var(--dy)) scale(0.2);
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 <body>
-  <h2>Indtast koden og afslut med #</h2>
-  <p style="color: #555; line-height: 1.5;">
-    </p>
-  <input type="text" id="display" readonly>
-  <div class="numpad">
-    <button onclick="addToDisplay('1')">1</button>
-    <button onclick="addToDisplay('2')">2</button>
-    <button onclick="addToDisplay('3')">3</button>
-    <button onclick="addToDisplay('4')">4</button>
-    <button onclick="addToDisplay('5')">5</button>
-    <button onclick="addToDisplay('6')">6</button>
-    <button onclick="addToDisplay('7')">7</button>
-    <button onclick="addToDisplay('8')">8</button>
-    <button onclick="addToDisplay('9')">9</button>
-    <button onclick="addToDisplay('*')">*</button>
-    <button onclick="addToDisplay('0')">0</button>
-    <button onclick="addToDisplay('#')">#</button>
+  <h1>Velkommen til Escape Room</h1>
+  <div class="menu">
+    <button onclick="window.location.href='gade1.html'">Gåde 1</button>
+    <button onclick="window.location.href='gade2.html'">Gåde 2</button>
   </div>
-  <p id="result"></p>
-
-  <script>
-    let inputCode = '';
-    const correctCode = '7330'; // Koden 
-    const secretMessage = 'Tillykke! Du klarede den!';
-    const errorMessage = 'Forkert kode, prøv igen!';
-
-    function addToDisplay(char) {
-      if (char === '#') {
-        checkCode();
-      } else {
-        inputCode += char;
-        document.getElementById('display').value = inputCode;
-      }
-    }
-
-    function checkCode() {
-      if (inputCode === correctCode) {
-        document.getElementById('result').innerText = secretMessage;
-        launchFireworks(); // Udløser forbedret fyrværkeri
-      } else {
-        document.getElementById('result').innerText = errorMessage;
-      }
-      inputCode = ''; // Nulstil input
-      document.getElementById('display').value = '';
-    }
-
-    function launchFireworks() {
-      for (let i = 0; i < 30; i++) { // Øget til 30 partikler
-        setTimeout(() => {
-          const firework = document.createElement('div');
-          firework.className = 'firework';
-          firework.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 50%)`;
-          // Start fra midten af skærmen
-          const startX = window.innerWidth / 2;
-          const startY = window.innerHeight / 2;
-          firework.style.left = `${startX}px`;
-          firework.style.top = `${startY}px`;
-          // Tilfældig spredning i alle retninger
-          const angle = Math.random() * 2 * Math.PI;
-          const distance = Math.random() * 200 + 50; // Spredning mellem 50-250px
-          firework.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
-          firework.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
-          document.body.appendChild(firework);
-          setTimeout(() => firework.remove(), 1500); // Fjern efter animation
-        }, i * 50); // Kortere forsinkelse for mere intens effekt
-      }
-    }
-  </script>
 </body>
 </html>
