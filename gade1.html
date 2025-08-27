@@ -64,12 +64,24 @@
         opacity: 0;
       }
     }
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #333;
+      background-color: #ddd;
+      cursor: pointer;
+    }
+    .back-button:hover {
+      background-color: #bbb;
+    }
   </style>
 </head>
 <body>
+  <button class="back-button" onclick="window.location.href='index.html'">Tilbage til menu</button>
   <h2>Indtast koden og afslut med #</h2>
-  <p style="color: #555; line-height: 1.5;">
-  </p>
   <input type="text" id="display" readonly>
   <div class="numpad">
     <button onclick="addToDisplay('1')">1</button>
@@ -89,7 +101,7 @@
 
   <script>
     let inputCode = '';
-    const correctCode = '7330'; // Den korrekte kode
+    const correctCode = '7330'; // Koden 
     const secretMessage = 'Tillykke! Du klarede den!';
     const errorMessage = 'Forkert kode, prøv igen!';
 
